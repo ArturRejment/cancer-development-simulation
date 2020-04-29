@@ -1,9 +1,11 @@
 ﻿#include <iostream>
-#include "Nagłówek.h"
+#include "classList.h"
 using namespace std;
 
 int main()
 {
-    cout << "Hello World!\n";
+    Map map1;
+
+    return 0;
 }
 
