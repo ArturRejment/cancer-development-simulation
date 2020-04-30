@@ -10,6 +10,14 @@ public:
 	Simulation();
 };
 
+class Field {
+private:
+	Bonus* bonus_pointer;
+	Cell* cell_pointer;
+public:
+	Field();
+};
+
 // Abstract class of cell
 class Cell {
 protected:
@@ -69,10 +77,11 @@ public:
 
 class Map {
 private:
-	char tab; // Array holds the information about restored type of object ( 'c' if it is cell or 'b' if it is bonus)
+	Field *map; // Array holds the information about restored type of object ( 'c' if it is cell or 'b' if it is bonus)
 	int startingStrongCell, startingMediumCell, startingWeakCell; // Amount of every cell at the beginnig of simulation given by user
 	int spaceBetweenHealing;
 public:
+	Map();
 	void drawDrugsLevel() {}; // Draws type of drug used in healing iteration
 	void getMesurements() {}; // Read number of cells
 };
