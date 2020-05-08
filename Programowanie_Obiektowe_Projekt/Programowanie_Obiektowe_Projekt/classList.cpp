@@ -1,39 +1,47 @@
 #include<iostream>
-#include "classList.h"
+#include<time.h>
+#include<cstdlib>
+#include"classList.h"
 using namespace std;
 
-Map::Map()
+
+Map::Map(int size, int strong, int medium, int weak, int space)
 {
-	cout << "Enter width and height of the map:" << endl;	
-	cout << "width = "; cin >> width;
-	cout << "height = "; cin >> height;
-	cout << "Enter the interval of giving drugs (in iteratoin): ";
-	cin >> spaceBetweenHealing;
-	cout << "Enter the max amount of iterations: ";
-	cin >> maxIterations;
-	cout << "Enter the amount of cells: " << endl;
-	cout << "Strong = "; cin >> startingStrongCell;
-	cout << "Medium = "; cin >> startingMediumCell;
-	cout << "Weak = "; cin >> startingWeakCell;
+	map = new Field[size];
+	startingStrongCell = strong;
+	startingMediumCell = medium;
+	startingWeakCell = weak;
+	spaceBetweenHealing = space;
 
-	
+	cout << map;
 }
 
-void Map::isFreeFunction(int x, int y)
+Field::Field()
 {
-	if ();
+	bonus_pointer = NULL;
+	cell_pointer = NULL;
 }
 
-void Drug_strong::healing(){
-
-}
-
-Bonus::Bonus()
+/*
+Cell_strong::Cell_strong()
 {
-	bool isFree;
-
-	do
-	{
-
-	} while (isFree == false);
+	hp = 500;
+	divide_ratio = 8;
+	position = setPosition();
 }
+
+Cell_medium::Cell_medium()
+{
+	hp = 300;
+	divide_ratio = 5;
+	position = setPosition();
+}
+
+Cell_weak::Cell_weak()
+{
+	hp = 150;
+	divide_ratio = 3;
+	position = setPosition();
+}
+
+*/

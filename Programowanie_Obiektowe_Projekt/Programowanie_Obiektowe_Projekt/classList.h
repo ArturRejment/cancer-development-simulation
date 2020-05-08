@@ -7,16 +7,20 @@ private:
 public:
 	void endCheck() {}; // Checking after every iteration if the simutalion should end 
 	void runSimulation() {};
-	Simulation();
+	Simulation() {};
 };
 
-class Field {
+class Bonus {
 private:
-	Bonus* bonus_pointer;
-	Cell* cell_pointer;
+	int position;
+	bool positive; // Defines the relation (positive or negative) between bonus and cell
 public:
-	Field();
+	void setBonusPosition() {}; // Seting positions of every bonus at the beginning of simulation
+	void extraDivide() {};
+	void instantCure() {};
 };
+
+
 
 // Abstract class of cell
 class Cell {
@@ -26,31 +30,42 @@ protected:
 	int divide_ratio;
 
 public:
-	virtual void setPosition() = 0; // Seting position on the map, also chceking if there is a bonus on this position
+	virtual int setPosition() = 0; // Seting position on the map, also chceking if there is a bonus on this position
 	virtual void divideCheck() = 0; // Checking if the cell is going to divide in current iteration
 	virtual bool stillAlive() = 0; // Checking if cells hp is still positive 
 };
 
 // Three types of cells
-class Cell_strong :private Cell {
+class Cell_strong :public Cell {
+public:
 	Cell_strong();
 	void divideCheck(); 
-	void setPosition();
+	int setPosition();
 	bool stillAlive();
 };
 
-class Cell_medium :private Cell {
+class Cell_medium :public Cell {
+public:
 	Cell_medium();
 	void divideCheck();
-	void setPosition();
+	int setPosition();
 	bool stillAlive();
 };
 
-class Cell_weak :private Cell {
+class Cell_weak :public Cell {
+public:
 	Cell_weak();
 	void divideCheck();
-	void setPosition();
+	int setPosition();
 	bool stillAlive();
+};
+
+class Field {
+private:
+	Cell* cell_pointer;
+	Bonus* bonus_pointer;
+public:
+	Field();
 };
 
 // Abstract class of drugs
@@ -81,17 +96,8 @@ private:
 	int startingStrongCell, startingMediumCell, startingWeakCell; // Amount of every cell at the beginnig of simulation given by user
 	int spaceBetweenHealing;
 public:
-	Map();
+	Map(int size, int strong, int medium, int weak, int space);
 	void drawDrugsLevel() {}; // Draws type of drug used in healing iteration
 	void getMesurements() {}; // Read number of cells
 };
 
-class Bonus {
-private:
-	int position;
-	bool positive; // Defines the relation (positive or negative) between bonus and cell
-public:
-	void setBonusPosition() {}; // Seting positions of every bonus at the beginning of simulation
-	void extraDivide() {};
-	void instantCure() {};
-};

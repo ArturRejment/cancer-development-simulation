@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="classList.cpp" />
     <ClCompile Include="Programowanie_Obiektowe_Projekt.cpp" />
   </ItemGroup>
   <ItemGroup>
