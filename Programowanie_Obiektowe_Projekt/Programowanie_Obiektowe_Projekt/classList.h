@@ -1,25 +1,14 @@
 #include<iostream>
 
 
-class Simulation {
-private:
-	int maxIter;
-public:
-	void endCheck() {}; // Checking after every iteration if the simutalion should end 
-	void runSimulation() {};
-	Simulation() {};
-};
-
 class Bonus {
 private:
 	int position;
-	bool positive; // Defines the relation (positive or negative) between bonus and cell
+	bool attitude; // Defines the relation (positive or negative) between bonus and cell
 public:
-	void setBonusPosition() {}; // Seting positions of every bonus at the beginning of simulation
-	void extraDivide() {};
-	void instantCure() {};
+	bool getAttitude() { return this->attitude; };
+	Bonus(int,bool);
 };
-
 
 
 // Abstract class of cell
@@ -30,7 +19,6 @@ protected:
 	int divide_ratio;
 
 public:
-	virtual int setPosition() = 0; // Seting position on the map, also chceking if there is a bonus on this position
 	virtual void divideCheck() = 0; // Checking if the cell is going to divide in current iteration
 	virtual bool stillAlive() = 0; // Checking if cells hp is still positive 
 };
@@ -38,26 +26,23 @@ public:
 // Three types of cells
 class Cell_strong :public Cell {
 public:
-	Cell_strong();
-	void divideCheck(); 
-	int setPosition();
-	bool stillAlive();
+	Cell_strong(int=300, int=1, int=10);
+	void divideCheck() {};
+	bool stillAlive() {return true; };
 };
 
 class Cell_medium :public Cell {
 public:
-	Cell_medium();
-	void divideCheck();
-	int setPosition();
-	bool stillAlive();
+	Cell_medium(int=200, int=1, int=5);
+	void divideCheck() {};
+	bool stillAlive() { return true; };
 };
 
 class Cell_weak :public Cell {
 public:
-	Cell_weak();
-	void divideCheck();
-	int setPosition();
-	bool stillAlive();
+	Cell_weak(int=100, int=1, int=2);
+	void divideCheck() {};
+	bool stillAlive() { return true; };
 };
 
 class Field {
@@ -66,6 +51,10 @@ private:
 	Bonus* bonus_pointer;
 public:
 	Field();
+	Cell* getCellPointer() { return this->cell_pointer; };
+	Bonus* getBonusPointer() { return this->bonus_pointer; };
+	void setCellPointer(Cell*);
+	void setBonusPointer(Bonus*);
 };
 
 // Abstract class of drugs
@@ -92,12 +81,36 @@ public:
 
 class Map {
 private:
-	Field *map; // Array holds the information about restored type of object ( 'c' if it is cell or 'b' if it is bonus)
+	Field *map; // Array holds the information about restored type of object
 	int startingStrongCell, startingMediumCell, startingWeakCell; // Amount of every cell at the beginnig of simulation given by user
 	int spaceBetweenHealing;
+	int startingBonus;
+	int size;
 public:
-	Map(int size, int strong, int medium, int weak, int space);
+	Map(int=4, int=1, int=1, int=1, int=1, int=1);
 	void drawDrugsLevel() {}; // Draws type of drug used in healing iteration
-	void getMesurements() {}; // Read number of cells
+	int getStartingCellStrong() ; 
+	int getStartingCellMedium() ;
+	int getStartingCellWeak() ;
+	int getStartingBonus();
+	int getSpaceBetweenHealing() ;
+	int getSize();
+	Field* getMap() ;
+};
+
+class Simulation {
+private:
+	int maxIter;
+	int cancerCellAmount;
+	Map map1;
+public:
+	bool endCheck() {}; // Checking after every iteration if the simutalion should end 
+	int setCellPosition();
+	int setBonusPosition();
+	void extraDivide() {};
+	void instantCure() {};
+	void runSimulation();
+	bool drawAttitude(); //draw bonus attitude(negative or positive)
+	Simulation(Map map1, int maxIteration) ;
 };
 
