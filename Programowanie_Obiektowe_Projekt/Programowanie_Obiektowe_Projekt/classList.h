@@ -1,4 +1,5 @@
 #include<iostream>
+using namespace std;
 
 
 class Bonus {
@@ -16,71 +17,53 @@ class Cell {
 protected:
 	int hp;
 	int position;
-	int divide_ratio;
+	int divideRatio;
 
 public:
 	virtual void divideCheck() = 0; // Checking if the cell is going to divide in current iteration
-	virtual bool stillAlive() = 0; // Checking if cells hp is still positive 
+	int getHp() { return this->hp; };
+	void setHp(int hp);
+	bool stillAlive();
+	virtual ~Cell() {};
 };
 
 // Three types of cells
-class Cell_strong :public Cell {
+class CellStrong :public Cell {
 public:
-	Cell_strong(int=300, int=1, int=10);
+	CellStrong(int=300, int=1, int=10);
 	void divideCheck() {};
-	bool stillAlive() {return true; };
+	~CellStrong();
 };
 
-class Cell_medium :public Cell {
+class CellMedium :public Cell {
 public:
-	Cell_medium(int=200, int=1, int=5);
+	CellMedium(int=200, int=1, int=5);
 	void divideCheck() {};
-	bool stillAlive() { return true; };
+	~CellMedium();
 };
 
-class Cell_weak :public Cell {
+class CellWeak :public Cell {
 public:
-	Cell_weak(int=100, int=1, int=2);
+	CellWeak(int=100, int=1, int=2);
 	void divideCheck() {};
-	bool stillAlive() { return true; };
+	~CellWeak();
 };
 
 class Field {
 private:
-	Cell* cell_pointer;
-	Bonus* bonus_pointer;
+	Cell* cellPointer;
+	Bonus* bonusPointer;
 public:
 	Field();
-	Cell* getCellPointer() { return this->cell_pointer; };
-	Bonus* getBonusPointer() { return this->bonus_pointer; };
+	Cell* getCellPointer() { return this->cellPointer; };
+	Bonus* getBonusPointer() { return this->bonusPointer; };
 	void setCellPointer(Cell*);
 	void setBonusPointer(Bonus*);
 };
 
-// Abstract class of drugs
-class Drug {
-protected:
-	int power;
-public:
-	virtual void healing() = 0; // Try to heal (substract hp if it's a cancer cell) every cell on the map in every iteration
-};
-
-// Two types of drugs
-class Drug_strong :private Drug {
-public:
-	Drug_strong() {};
-	void healing();
-};
-
-class Drug_medium :private Drug {
-public:
-	Drug_medium() {};
-	void healing();
-
-};
-
 class Map {
 private:
+
 	Field *map; // Array holds the information about restored type of object
 	int startingStrongCell, startingMediumCell, startingWeakCell; // Amount of every cell at the beginnig of simulation given by user
 	int spaceBetweenHealing;
@@ -88,7 +71,7 @@ private:
 	int size;
 public:
 	Map(int=4, int=1, int=1, int=1, int=1, int=1);
-	void drawDrugsLevel() {}; // Draws type of drug used in healing iteration
+	
 	int getStartingCellStrong() ; 
 	int getStartingCellMedium() ;
 	int getStartingCellWeak() ;
@@ -98,13 +81,40 @@ public:
 	Field* getMap() ;
 };
 
+// Abstract class of drugs
+class Drug {
+protected:
+	int power;
+	Map map1;
+public:
+	virtual void healing(Map *map1, int power) = 0; // Try to heal (substract hp if it's a cancer cell) every cell on the map in particular iterations
+	int getPower() { return this->power; };
+};
+
+
+// Two types of drugs
+class DrugStrong :public Drug {
+public:
+	DrugStrong(int=100);
+	void healing(Map *map1, int power);
+};
+
+class DrugMedium :public Drug {
+public:
+	DrugMedium(int=50);
+	void healing(Map *map1, int power);
+
+};
+
+
 class Simulation {
 private:
 	int maxIter;
-	int cancerCellAmount;
+	int currentIteration;
 	Map map1;
 public:
-	bool endCheck() {}; // Checking after every iteration if the simutalion should end 
+	bool drawDrugsLevel() ; // Draws type of drug used in healing iteration
+	bool endCheck() ; // Checking after every iteration if the simutalion should end 
 	int setCellPosition();
 	int setBonusPosition();
 	void extraDivide() {};
