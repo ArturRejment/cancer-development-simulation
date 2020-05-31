@@ -7,7 +7,8 @@ private:
 	int position;
 	bool attitude; // Defines the relation (positive or negative) between bonus and cell
 public:
-	bool getAttitude() { return this->attitude; };
+	static bool drawAttitude(); //draw bonus attitude(negative or positive)
+	bool getAttitude();
 	Bonus(int,bool);
 };
 
@@ -21,7 +22,7 @@ protected:
 
 public:
 	virtual void divideCheck() = 0; // Checking if the cell is going to divide in current iteration
-	int getHp() { return this->hp; };
+	int getHp();
 	void setHp(int hp);
 	bool stillAlive();
 	virtual ~Cell() {};
@@ -55,8 +56,8 @@ private:
 	Bonus* bonusPointer;
 public:
 	Field();
-	Cell* getCellPointer() { return this->cellPointer; };
-	Bonus* getBonusPointer() { return this->bonusPointer; };
+	Cell* getCellPointer();
+	Bonus* getBonusPointer();
 	void setCellPointer(Cell*);
 	void setBonusPointer(Bonus*);
 };
@@ -87,8 +88,9 @@ protected:
 	int power;
 	Map map1;
 public:
+	static bool drawDrugsLevel(); // Draws type of drug used in healing iteration
 	virtual void healing(Map *map1, int power) = 0; // Try to heal (substract hp if it's a cancer cell) every cell on the map in particular iterations
-	int getPower() { return this->power; };
+	int getPower();
 };
 
 
@@ -109,18 +111,19 @@ public:
 
 class Simulation {
 private:
+	static Simulation* instance;
+	Simulation(Map map1, int maxIteration);
 	int maxIter;
 	int currentIteration;
 	Map map1;
 public:
-	bool drawDrugsLevel() ; // Draws type of drug used in healing iteration
+	static Simulation* getInstance(Map map1, int maxIter);
 	bool endCheck() ; // Checking after every iteration if the simutalion should end 
 	int setCellPosition();
 	int setBonusPosition();
 	void extraDivide() {};
 	void instantCure() {};
 	void runSimulation();
-	bool drawAttitude(); //draw bonus attitude(negative or positive)
-	Simulation(Map map1, int maxIteration) ;
+	
 };
 

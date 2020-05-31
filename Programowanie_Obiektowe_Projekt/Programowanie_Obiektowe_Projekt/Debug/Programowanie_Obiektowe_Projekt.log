@@ -1,5 +1,7 @@
-﻿  classList.cpp
-C:\Users\rejme\OneDrive\Pulpit\Uczelnia\SEMESTR II\Programowanie obiektowe\Projekt\Projekt-PO\Programowanie_Obiektowe_Projekt\Programowanie_Obiektowe_Projekt\classList.cpp(186,12): warning C4244: "argument": konwersja z "time_t" do "unsigned int", możliwa utrata danych
-C:\Users\rejme\OneDrive\Pulpit\Uczelnia\SEMESTR II\Programowanie obiektowe\Projekt\Projekt-PO\Programowanie_Obiektowe_Projekt\Programowanie_Obiektowe_Projekt\classList.cpp(188,7): warning C4101: "currentAttitude": lokalna zmienna, do której nie istnieje odwołanie
+﻿  Programowanie_Obiektowe_Projekt.cpp
+  classList.cpp
 C:\Users\rejme\OneDrive\Pulpit\Uczelnia\SEMESTR II\Programowanie obiektowe\Projekt\Projekt-PO\Programowanie_Obiektowe_Projekt\Programowanie_Obiektowe_Projekt\classList.cpp(213,12): warning C4244: "argument": konwersja z "time_t" do "unsigned int", możliwa utrata danych
+C:\Users\rejme\OneDrive\Pulpit\Uczelnia\SEMESTR II\Programowanie obiektowe\Projekt\Projekt-PO\Programowanie_Obiektowe_Projekt\Programowanie_Obiektowe_Projekt\classList.cpp(215,7): warning C4101: "currentAttitude": lokalna zmienna, do której nie istnieje odwołanie
+C:\Users\rejme\OneDrive\Pulpit\Uczelnia\SEMESTR II\Programowanie obiektowe\Projekt\Projekt-PO\Programowanie_Obiektowe_Projekt\Programowanie_Obiektowe_Projekt\classList.cpp(240,12): warning C4244: "argument": konwersja z "time_t" do "unsigned int", możliwa utrata danych
+  Generowanie kodu...
   Programowanie_Obiektowe_Projekt.vcxproj -> C:\Users\rejme\OneDrive\Pulpit\Uczelnia\SEMESTR II\Programowanie obiektowe\Projekt\Projekt-PO\Programowanie_Obiektowe_Projekt\Debug\Programowanie_Obiektowe_Projekt.exe

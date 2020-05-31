@@ -14,6 +14,21 @@ Bonus::Bonus(int position, bool setAttitude)
 	this->attitude = setAttitude;
 }
 
+bool Bonus::getAttitude() { return this->attitude; }
+
+bool Bonus::drawAttitude()
+{
+	int random = rand() % 2;
+	if (random == 1)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 
 ////////////////// CELL IMPLEMENTATION /////////////////////////
 CellStrong::CellStrong(int hp, int position, int divide)
@@ -51,6 +66,8 @@ bool Cell::stillAlive()
 	else return false;
 }
 
+int Cell::getHp() { return this->hp; }
+
 
 CellStrong::~CellStrong()
 {
@@ -85,6 +102,10 @@ void Field::setBonusPointer(Bonus* newPointer)
 	this->bonusPointer = newPointer;
 }
 
+Cell* Field::getCellPointer() { return this->cellPointer; }
+
+Bonus* Field::getBonusPointer() { return this->bonusPointer; }
+
 
 ////////////////// DRUG IMPLEMENTATION /////////////////////////
 DrugStrong::DrugStrong(int power)
@@ -95,6 +116,18 @@ DrugStrong::DrugStrong(int power)
 DrugMedium::DrugMedium(int power)
 {
 	this->power = power;
+}
+
+int Drug::getPower() { return this->power; }
+
+bool Drug::drawDrugsLevel()
+{
+	int level;
+	level = rand() % 3;
+	if (level == 0)
+		return 0; //drug strong
+	else
+		return 1; //drug medium
 }
 
 void DrugStrong::healing(Map *map1, int power)
@@ -143,15 +176,9 @@ Map::Map(int size, int strong, int medium, int weak, int bonus, int space)
 	startingBonus = bonus;
 } 
 
-int Map::getSize()
-{
-	return this->size;
-}
+int Map::getSize() { return this->size; }
 
-Field* Map::getMap()
-{
-	return this->map;
-}
+Field* Map::getMap() { return this->map; }
 
 int Map::getStartingCellStrong() { return this->startingStrongCell; }
 int Map::getStartingCellMedium() { return this->startingMediumCell; }
@@ -161,6 +188,17 @@ int Map::getStartingBonus() { return this->startingBonus; }
 
 
 ////////////////// SIMULATION IMPLEMENTATION //////////////////////
+Simulation* Simulation::instance = 0;
+
+Simulation* Simulation::getInstance(Map map1, int maxIter)
+{
+	if (instance == 0)
+	{
+		instance = new Simulation(map1,maxIter);
+	}
+	return instance;
+}
+
 Simulation::Simulation(Map map1, int maxIteration)
 {
 	this->map1 = map1;
@@ -168,18 +206,7 @@ Simulation::Simulation(Map map1, int maxIteration)
 	currentIteration = 1;
 }
 
-bool Simulation::drawAttitude()
-{
-	int random = rand() % 2;
-	if (random == 1)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
+
 
 int Simulation::setCellPosition()
 {
@@ -222,15 +249,6 @@ int Simulation::setBonusPosition()
 	} while (true);
 }
 
-bool Simulation::drawDrugsLevel()
-{
-	int level;
-	level = rand() % 3;
-	if (level == 0)
-		return 0; //drug strong
-	else
-		return 1; //drug medium
-}
 
 bool Simulation::endCheck()
 {
@@ -242,33 +260,37 @@ void Simulation::runSimulation()
 {
 	int pos, i;
 	bool attitude;
+	Cell* cellStrong;
+	Cell* cellMedium;
+	Cell* cellWeak;
+	Bonus* bonus;
 
 	for (i = 0; i < map1.getStartingCellStrong(); i++)
 	{
 		pos = setCellPosition();
-		Cell *cellStrong = new CellStrong(300, pos, 10);
+		cellStrong = new CellStrong(300, pos, 10);
 		(map1.getMap() + pos)->setCellPointer(cellStrong);
 	}
 
 	for (i = 0; i < map1.getStartingCellMedium(); i++)
 	{
 		pos = setCellPosition();
-		Cell *cellMedium = new CellMedium(200, pos, 5);
+		cellMedium = new CellMedium(200, pos, 5);
 		(map1.getMap() + pos)->setCellPointer(cellMedium);
 	}
 
 	for (i = 0; i < map1.getStartingCellWeak(); i++)
 	{
 		pos = setCellPosition();
-		Cell *cellWeak = new CellWeak(100, pos, 2);
+		cellWeak = new CellWeak(100, pos, 2);
 		(map1.getMap() + pos)->setCellPointer(cellWeak);
 	}
 
 	for(i = 0 ; i < map1.getStartingBonus(); i++)
 	{
 		pos = setBonusPosition();
-		attitude = drawAttitude();
-		Bonus* bonus = new Bonus(pos, attitude);
+		attitude = Bonus::drawAttitude();
+		bonus = new Bonus(pos, attitude);
 		(map1.getMap() + pos)->setBonusPointer(bonus);
 	}
 
@@ -278,7 +300,7 @@ void Simulation::runSimulation()
 
 		if (currentIteration % (map1.getSpaceBetweenHealing()) == 0)
 		{
-			bool level = drawDrugsLevel();
+			bool level = Drug::drawDrugsLevel();
 			if(level == 0) //drugStrong
 			{
 				DrugStrong* drugStrong = new DrugStrong(100);

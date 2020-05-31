@@ -5,8 +5,8 @@ using namespace std;
 int main()
 {
     Map map1(20,4,1,1,2,5);
-    Simulation sim1(map1, 50);
-    sim1.runSimulation();
+    Simulation* sim1 = Simulation::getInstance(map1, 50);
+    (*sim1).runSimulation();
 
     return 0;
 }
