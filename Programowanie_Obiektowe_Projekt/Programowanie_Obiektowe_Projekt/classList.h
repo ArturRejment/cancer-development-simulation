@@ -1,15 +1,20 @@
 #include<iostream>
 using namespace std;
 
+class Map;
 
 class Bonus {
 private:
 	int position;
 	bool attitude; // Defines the relation (positive or negative) between bonus and cell
 public:
+	static int setBonusPosition(Map map1);
 	static bool drawAttitude(); //draw bonus attitude(negative or positive)
+	static void extraDivide(int pos, Map* map1, string type);
+	static void instantCure(int pos, Map* map1);
 	bool getAttitude();
-	Bonus(int,bool);
+	Bonus(int, bool);
+	~Bonus();
 };
 
 
@@ -19,9 +24,10 @@ protected:
 	int hp;
 	int position;
 	int divideRatio;
-
 public:
-	virtual void divideCheck() = 0; // Checking if the cell is going to divide in current iteration
+	static int setCellPosition(Map* map1, string type);
+	virtual void divideCheck(Map* map1) = 0; // Checking if the cell is going to divide in current iteration
+	virtual string getType() = 0;
 	int getHp();
 	void setHp(int hp);
 	bool stillAlive();
@@ -31,22 +37,25 @@ public:
 // Three types of cells
 class CellStrong :public Cell {
 public:
-	CellStrong(int=300, int=1, int=10);
-	void divideCheck() {};
+	CellStrong(int = 1, int = 200, int = 10);
+	void divideCheck(Map* map1);
+	string getType();
 	~CellStrong();
 };
 
 class CellMedium :public Cell {
 public:
-	CellMedium(int=200, int=1, int=5);
-	void divideCheck() {};
+	CellMedium(int = 1, int = 130, int = 5);
+	void divideCheck(Map* map1);
+	string getType();
 	~CellMedium();
 };
 
 class CellWeak :public Cell {
 public:
-	CellWeak(int=100, int=1, int=2);
-	void divideCheck() {};
+	CellWeak(int = 1, int = 70, int = 2);
+	void divideCheck(Map* map1);
+	string getType();
 	~CellWeak();
 };
 
@@ -65,21 +74,21 @@ public:
 class Map {
 private:
 
-	Field *map; // Array holds the information about restored type of object
+	Field* map; // Array holds the information about restored type of object
 	int startingStrongCell, startingMediumCell, startingWeakCell; // Amount of every cell at the beginnig of simulation given by user
 	int spaceBetweenHealing;
 	int startingBonus;
 	int size;
 public:
-	Map(int=4, int=1, int=1, int=1, int=1, int=1);
-	
-	int getStartingCellStrong() ; 
-	int getStartingCellMedium() ;
-	int getStartingCellWeak() ;
+	Map(int = 4, int = 1, int = 1, int = 1, int = 1, int = 1);
+
+	int getStartingCellStrong();
+	int getStartingCellMedium();
+	int getStartingCellWeak();
 	int getStartingBonus();
-	int getSpaceBetweenHealing() ;
+	int getSpaceBetweenHealing();
 	int getSize();
-	Field* getMap() ;
+	Field* getMap();
 };
 
 // Abstract class of drugs
@@ -118,11 +127,8 @@ private:
 	Map map1;
 public:
 	static Simulation* getInstance(Map map1, int maxIter);
-	bool endCheck() ; // Checking after every iteration if the simutalion should end 
-	int setCellPosition();
-	int setBonusPosition();
-	void extraDivide() {};
-	void instantCure() {};
+	static void createObject(string type, Map* map1);
+	int endCheck() ; // Checking after every iteration if the simutalion should end 
 	void runSimulation();
 	
 };

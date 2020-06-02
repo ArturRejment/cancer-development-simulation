@@ -4,16 +4,13 @@ using namespace std;
 
 int main()
 {
-    Map map1(20,4,1,1,2,5);
-    Simulation* sim1 = Simulation::getInstance(map1, 50);
+    Map map1(1000,40,50,30,5,1); //Map parameters: size, strongCells, mediumCells, weakCells, bonus, space
+    Simulation* sim1 = Simulation::getInstance(map1, 100);
     (*sim1).runSimulation();
 
     return 0;
 }
 
 //Do zrobienia
-//napisac cialo endCheck()
-//napisac cialo extraDivide()
-//napisac cialo instantCure()
-//interakcja celli z bonusem
-//podział komórek
+//Wypisanie przebiegu symulacji
+//Dokumentacja DoxyGen na podstawie komentarzy w kodzie
