@@ -1,2 +1,8 @@
-﻿  Programowanie_Obiektowe_Projekt.cpp
+﻿  classList.cpp
+C:\Users\rejme\OneDrive\Pulpit\Uczelnia\SEMESTR II\Programowanie obiektowe\Projekt\Projekt-PO\Programowanie_Obiektowe_Projekt\Programowanie_Obiektowe_Projekt\classList.cpp(7,1): warning C4005: "_CRT_SECURE_NO_WARNINGS": ponowna definicja makra
+C:\Users\rejme\OneDrive\Pulpit\Uczelnia\SEMESTR II\Programowanie obiektowe\Projekt\Projekt-PO\Programowanie_Obiektowe_Projekt\Programowanie_Obiektowe_Projekt\classList.cpp : message : zobacz poprzednią definicję „_CRT_SECURE_NO_WARNINGS”
+C:\Users\rejme\OneDrive\Pulpit\Uczelnia\SEMESTR II\Programowanie obiektowe\Projekt\Projekt-PO\Programowanie_Obiektowe_Projekt\Programowanie_Obiektowe_Projekt\classList.cpp(74,12): warning C4244: "argument": konwersja z "time_t" do "unsigned int", możliwa utrata danych
+C:\Users\rejme\OneDrive\Pulpit\Uczelnia\SEMESTR II\Programowanie obiektowe\Projekt\Projekt-PO\Programowanie_Obiektowe_Projekt\Programowanie_Obiektowe_Projekt\classList.cpp(122,12): warning C4244: "argument": konwersja z "time_t" do "unsigned int", możliwa utrata danych
+C:\Users\rejme\OneDrive\Pulpit\Uczelnia\SEMESTR II\Programowanie obiektowe\Projekt\Projekt-PO\Programowanie_Obiektowe_Projekt\Programowanie_Obiektowe_Projekt\classList.cpp(124,7): warning C4101: "currentAttitude": lokalna zmienna, do której nie istnieje odwołanie
+C:\Users\rejme\OneDrive\Pulpit\Uczelnia\SEMESTR II\Programowanie obiektowe\Projekt\Projekt-PO\Programowanie_Obiektowe_Projekt\Programowanie_Obiektowe_Projekt\classList.cpp(396,14): warning C4244: "inicjowanie": konwersja z "double" do "float", możliwa utrata danych
   Programowanie_Obiektowe_Projekt.vcxproj -> C:\Users\rejme\OneDrive\Pulpit\Uczelnia\SEMESTR II\Programowanie obiektowe\Projekt\Projekt-PO\Programowanie_Obiektowe_Projekt\Debug\Programowanie_Obiektowe_Projekt.exe

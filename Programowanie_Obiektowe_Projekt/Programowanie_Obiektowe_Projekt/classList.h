@@ -27,7 +27,6 @@ protected:
 public:
 	static int setCellPosition(Map* map1, string type);
 	virtual void divideCheck(Map* map1) = 0; // Checking if the cell is going to divide in current iteration
-	virtual string getType() = 0;
 	int getHp();
 	void setHp(int hp);
 	bool stillAlive();
@@ -39,7 +38,6 @@ class CellStrong :public Cell {
 public:
 	CellStrong(int = 1, int = 200, int = 10);
 	void divideCheck(Map* map1);
-	string getType();
 	~CellStrong();
 };
 
@@ -47,7 +45,6 @@ class CellMedium :public Cell {
 public:
 	CellMedium(int = 1, int = 130, int = 5);
 	void divideCheck(Map* map1);
-	string getType();
 	~CellMedium();
 };
 
@@ -55,7 +52,6 @@ class CellWeak :public Cell {
 public:
 	CellWeak(int = 1, int = 70, int = 2);
 	void divideCheck(Map* map1);
-	string getType();
 	~CellWeak();
 };
 
@@ -128,6 +124,8 @@ private:
 public:
 	static Simulation* getInstance(Map map1, int maxIter);
 	static void createObject(string type, Map* map1);
+	static void printToFile(int endNumber, int currentIteration, char healingLevel[9]);
+	static void printToScreen(Map map1);
 	int endCheck() ; // Checking after every iteration if the simutalion should end 
 	void runSimulation();
 	
