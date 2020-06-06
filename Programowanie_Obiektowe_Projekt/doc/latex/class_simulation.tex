@@ -1,0 +1,114 @@
+\hypertarget{class_simulation}{}\doxysection{Simulation Class Reference}
+\label{class_simulation}\index{Simulation@{Simulation}}
+
+
+The class that contains the logic of the simulation.  
+
+
+
+
+{\ttfamily \#include $<$class\+List.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_simulation_a0527a81f06bb384447c46aa0018b0e64}{end\+Check}} ()
+\begin{DoxyCompactList}\small\item\em A function that checks if the simulation should end. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_simulation_a616822b3292520c8322b7f7ddb484076}{run\+Simulation}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_simulation}{Simulation}} $\ast$ \mbox{\hyperlink{class_simulation_aae00e465ee9e6d37e4bd4da95ef39ba6}{get\+Instance}} (\mbox{\hyperlink{class_map}{Map}} map1, int max\+Iter)
+\item 
+static void \mbox{\hyperlink{class_simulation_aa04a7275e599c8a94c1234de053bebaf}{create\+Object}} (string type, \mbox{\hyperlink{class_map}{Map}} $\ast$map1)
+\begin{DoxyCompactList}\small\item\em Create specific type of object. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_simulation_a58dd10c30604d6c1534dd8f18786974d}{print\+To\+File}} (int end\+Number, int current\+Iteration, char healing\+Level\mbox{[}9\mbox{]})
+\begin{DoxyCompactList}\small\item\em A function responsible for printing a simulation process to the file. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_simulation_aafa8e08592552764ceca125d046f5ec3}{print\+To\+Screen}} (\mbox{\hyperlink{class_map}{Map}} map1)
+\begin{DoxyCompactList}\small\item\em A function responsible for printing up to date a simulation process on the screen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The class that contains the logic of the simulation. 
+
+Built as a singleton and facade design pattern 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_simulation_aa04a7275e599c8a94c1234de053bebaf}\label{class_simulation_aa04a7275e599c8a94c1234de053bebaf}} 
+\index{Simulation@{Simulation}!createObject@{createObject}}
+\index{createObject@{createObject}!Simulation@{Simulation}}
+\doxysubsubsection{\texorpdfstring{createObject()}{createObject()}}
+{\footnotesize\ttfamily void Simulation\+::create\+Object (\begin{DoxyParamCaption}\item[{string}]{type,  }\item[{\mbox{\hyperlink{class_map}{Map}} $\ast$}]{map1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Create specific type of object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & holds an information about the type of creating object ~\newline
+ \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_simulation_a0527a81f06bb384447c46aa0018b0e64}\label{class_simulation_a0527a81f06bb384447c46aa0018b0e64}} 
+\index{Simulation@{Simulation}!endCheck@{endCheck}}
+\index{endCheck@{endCheck}!Simulation@{Simulation}}
+\doxysubsubsection{\texorpdfstring{endCheck()}{endCheck()}}
+{\footnotesize\ttfamily int Simulation\+::end\+Check (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+A function that checks if the simulation should end. 
+
+\begin{DoxyReturn}{Returns}
+1 if the simulation should keep going 
+
+2 if all cancer cells are cured 
+
+3 if cancer cells took over at least 90\% of the organism 
+
+4 if the simulation should end because of too many iterations 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_simulation_aae00e465ee9e6d37e4bd4da95ef39ba6}\label{class_simulation_aae00e465ee9e6d37e4bd4da95ef39ba6}} 
+\index{Simulation@{Simulation}!getInstance@{getInstance}}
+\index{getInstance@{getInstance}!Simulation@{Simulation}}
+\doxysubsubsection{\texorpdfstring{getInstance()}{getInstance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_simulation}{Simulation}} $\ast$ Simulation\+::get\+Instance (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_map}{Map}}}]{map1,  }\item[{int}]{max\+Iter }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxyReturn}{Returns}
+return existing object or create new instance 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_simulation_a58dd10c30604d6c1534dd8f18786974d}\label{class_simulation_a58dd10c30604d6c1534dd8f18786974d}} 
+\index{Simulation@{Simulation}!printToFile@{printToFile}}
+\index{printToFile@{printToFile}!Simulation@{Simulation}}
+\doxysubsubsection{\texorpdfstring{printToFile()}{printToFile()}}
+{\footnotesize\ttfamily void Simulation\+::print\+To\+File (\begin{DoxyParamCaption}\item[{int}]{end\+Number,  }\item[{int}]{current\+Iteration,  }\item[{char}]{healing\+Level\mbox{[}9\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+A function responsible for printing a simulation process to the file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em end\+Number} & contains an information about returned value by \mbox{\hyperlink{class_simulation_a0527a81f06bb384447c46aa0018b0e64}{end\+Check()}} function \\
+\hline
+{\em healing\+Level} & contains an information about the type of drugs used in current simulation \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_simulation_aafa8e08592552764ceca125d046f5ec3}\label{class_simulation_aafa8e08592552764ceca125d046f5ec3}} 
+\index{Simulation@{Simulation}!printToScreen@{printToScreen}}
+\index{printToScreen@{printToScreen}!Simulation@{Simulation}}
+\doxysubsubsection{\texorpdfstring{printToScreen()}{printToScreen()}}
+{\footnotesize\ttfamily void Simulation\+::print\+To\+Screen (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_map}{Map}}}]{map1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+A function responsible for printing up to date a simulation process on the screen. 
+
+\mbox{\Hypertarget{class_simulation_a616822b3292520c8322b7f7ddb484076}\label{class_simulation_a616822b3292520c8322b7f7ddb484076}} 
+\index{Simulation@{Simulation}!runSimulation@{runSimulation}}
+\index{runSimulation@{runSimulation}!Simulation@{Simulation}}
+\doxysubsubsection{\texorpdfstring{runSimulation()}{runSimulation()}}
+{\footnotesize\ttfamily void Simulation\+::run\+Simulation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+

@@ -1,0 +1,131 @@
+\hypertarget{class_cell}{}\doxysection{Cell Class Reference}
+\label{class_cell}\index{Cell@{Cell}}
+
+
+Abstract class of cancer cells.  
+
+
+
+
+{\ttfamily \#include $<$class\+List.\+h$>$}
+
+Inheritance diagram for Cell\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_cell}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{class_cell_a412162eb7ea77e2fb4118ad8689fc3b8}{divide\+Check}} (\mbox{\hyperlink{class_map}{Map}} $\ast$map1)=0
+\begin{DoxyCompactList}\small\item\em Checking if the cell is going to divide in current iteration. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_cell_a6e59386034c7a079a34b65cc306ce3bc}{get\+Hp}} ()
+\item 
+void \mbox{\hyperlink{class_cell_abeb3aa74daae36cb90ff0db643533e21}{set\+Hp}} (int \mbox{\hyperlink{class_cell_adfb51cae1fcad782d130b9ab4431865a}{hp}})
+\item 
+virtual \mbox{\hyperlink{class_cell_a1e6408c1546e13a9e91a291867f43eec}{$\sim$\+Cell}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_cell_ac84f88d6f65734ab03a67d9b4a4ea2ed}{still\+Alive}} (int pos, \mbox{\hyperlink{class_map}{Map}} $\ast$map1)
+\begin{DoxyCompactList}\small\item\em Checking after healing if cancer cell is alive. \end{DoxyCompactList}\item 
+static int \mbox{\hyperlink{class_cell_a16358fa0f549d8f7ccf406b37fca3c67}{set\+Cell\+Position}} (\mbox{\hyperlink{class_map}{Map}} $\ast$map1, string type)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{class_cell_adfb51cae1fcad782d130b9ab4431865a}{hp}}
+\item 
+int \mbox{\hyperlink{class_cell_a528d46b73115d4ecc791ad0ca2a295d7}{position}}
+\item 
+int \mbox{\hyperlink{class_cell_afd5439d2e566143d63fc00ca704f0880}{divide\+Ratio}}
+\begin{DoxyCompactList}\small\item\em Ratio that defines the probability of cell division. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Abstract class of cancer cells. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_cell_a1e6408c1546e13a9e91a291867f43eec}\label{class_cell_a1e6408c1546e13a9e91a291867f43eec}} 
+\index{Cell@{Cell}!````~Cell@{$\sim$Cell}}
+\index{````~Cell@{$\sim$Cell}!Cell@{Cell}}
+\doxysubsubsection{\texorpdfstring{$\sim$Cell()}{~Cell()}}
+{\footnotesize\ttfamily virtual Cell\+::$\sim$\+Cell (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_cell_a412162eb7ea77e2fb4118ad8689fc3b8}\label{class_cell_a412162eb7ea77e2fb4118ad8689fc3b8}} 
+\index{Cell@{Cell}!divideCheck@{divideCheck}}
+\index{divideCheck@{divideCheck}!Cell@{Cell}}
+\doxysubsubsection{\texorpdfstring{divideCheck()}{divideCheck()}}
+{\footnotesize\ttfamily virtual void Cell\+::divide\+Check (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_map}{Map}} $\ast$}]{map1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Checking if the cell is going to divide in current iteration. 
+
+
+
+Implemented in \mbox{\hyperlink{class_cell_weak_afe270d2d093d201726e70f1443ff8bd8}{Cell\+Weak}}, \mbox{\hyperlink{class_cell_medium_a7034c49d10a760a70ad7a407644b809e}{Cell\+Medium}}, and \mbox{\hyperlink{class_cell_strong_a83f4aed95f73a5b5e9cc9c744facff37}{Cell\+Strong}}.
+
+\mbox{\Hypertarget{class_cell_a6e59386034c7a079a34b65cc306ce3bc}\label{class_cell_a6e59386034c7a079a34b65cc306ce3bc}} 
+\index{Cell@{Cell}!getHp@{getHp}}
+\index{getHp@{getHp}!Cell@{Cell}}
+\doxysubsubsection{\texorpdfstring{getHp()}{getHp()}}
+{\footnotesize\ttfamily int Cell\+::get\+Hp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_cell_a16358fa0f549d8f7ccf406b37fca3c67}\label{class_cell_a16358fa0f549d8f7ccf406b37fca3c67}} 
+\index{Cell@{Cell}!setCellPosition@{setCellPosition}}
+\index{setCellPosition@{setCellPosition}!Cell@{Cell}}
+\doxysubsubsection{\texorpdfstring{setCellPosition()}{setCellPosition()}}
+{\footnotesize\ttfamily int Cell\+::set\+Cell\+Position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_map}{Map}} $\ast$}]{map1,  }\item[{string}]{type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & holds an information about the type of dividing cell \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_cell_abeb3aa74daae36cb90ff0db643533e21}\label{class_cell_abeb3aa74daae36cb90ff0db643533e21}} 
+\index{Cell@{Cell}!setHp@{setHp}}
+\index{setHp@{setHp}!Cell@{Cell}}
+\doxysubsubsection{\texorpdfstring{setHp()}{setHp()}}
+{\footnotesize\ttfamily void Cell\+::set\+Hp (\begin{DoxyParamCaption}\item[{int}]{hp }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_cell_ac84f88d6f65734ab03a67d9b4a4ea2ed}\label{class_cell_ac84f88d6f65734ab03a67d9b4a4ea2ed}} 
+\index{Cell@{Cell}!stillAlive@{stillAlive}}
+\index{stillAlive@{stillAlive}!Cell@{Cell}}
+\doxysubsubsection{\texorpdfstring{stillAlive()}{stillAlive()}}
+{\footnotesize\ttfamily void Cell\+::still\+Alive (\begin{DoxyParamCaption}\item[{int}]{pos,  }\item[{\mbox{\hyperlink{class_map}{Map}} $\ast$}]{map1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Checking after healing if cancer cell is alive. 
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_cell_afd5439d2e566143d63fc00ca704f0880}\label{class_cell_afd5439d2e566143d63fc00ca704f0880}} 
+\index{Cell@{Cell}!divideRatio@{divideRatio}}
+\index{divideRatio@{divideRatio}!Cell@{Cell}}
+\doxysubsubsection{\texorpdfstring{divideRatio}{divideRatio}}
+{\footnotesize\ttfamily int Cell\+::divide\+Ratio\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Ratio that defines the probability of cell division. 
+
+\mbox{\Hypertarget{class_cell_adfb51cae1fcad782d130b9ab4431865a}\label{class_cell_adfb51cae1fcad782d130b9ab4431865a}} 
+\index{Cell@{Cell}!hp@{hp}}
+\index{hp@{hp}!Cell@{Cell}}
+\doxysubsubsection{\texorpdfstring{hp}{hp}}
+{\footnotesize\ttfamily int Cell\+::hp\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_cell_a528d46b73115d4ecc791ad0ca2a295d7}\label{class_cell_a528d46b73115d4ecc791ad0ca2a295d7}} 
+\index{Cell@{Cell}!position@{position}}
+\index{position@{position}!Cell@{Cell}}
+\doxysubsubsection{\texorpdfstring{position}{position}}
+{\footnotesize\ttfamily int Cell\+::position\hspace{0.3cm}{\ttfamily [protected]}}
+

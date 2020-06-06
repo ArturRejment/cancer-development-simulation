@@ -1,12 +1,12 @@
-#include<iostream>
+#include<iostream> 
+#include<stdio.h>
 #include<time.h>
 #include<cstdlib>
 #include<Windows.h>
+#include<cstring>
 #include"classList.h"
 
 #define _CRT_SECURE_NO_WARNINGS
-
-using namespace std;
 
 int cancerCellAmount = 0;
 int cancerStrongAmount = 0;
@@ -21,14 +21,24 @@ Bonus* bonusHolder = new Bonus(-1,1);
 FILE* simOutput;
 Simulation* Simulation::instance = 0;
 
-void Color(int color)
+void color(int color)
 {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 	return;
 }
 
+void gotoxy(int x, int y)
+{
+    COORD c;
+
+    c.X = x;
+    c.Y = y;
+    SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE ), c );
+}
+
 
 ////////////////// BONUS IMPLEMENTATION /////////////////////////
+
 Bonus::Bonus(int position, bool setAttitude)
 {
 	this->position = position;
@@ -86,6 +96,7 @@ int Bonus::setBonusPosition(Map map1)
 
 
 ////////////////// CELL IMPLEMENTATION /////////////////////////
+
 CellStrong::CellStrong(int position, int hp, int divide)
 {
 	this->hp = hp;
@@ -152,10 +163,16 @@ int Cell::setCellPosition(Map* map1, string type)
 
 void Cell::setHp(int hp) { this->hp = hp; return; }
 
-bool Cell::stillAlive()
+void Cell::stillAlive(int pos, Map* map1)
 {
-	if (this->hp > 0) return true;
-	else return false;
+	if ((map1->getMap()+pos)->getCellPointer()->hp < 0)
+	{
+		delete (map1->getMap() + pos)->getCellPointer();
+		(map1->getMap() + pos)->setCellPointer(NULL);
+		cellsHealedIteration++;
+		cellHealedAll++;
+	}
+
 }
 
 int Cell::getHp() { return this->hp; }
@@ -296,7 +313,6 @@ void DrugMedium::healing(Map *map1, int power)
 ///////////////// MAP IMPLEMENTATION ///////////////////////
 Map::Map(int size, int strong, int medium, int weak, int bonus, int space)
 {
-	
 	this->size = size;
 	map = new Field[size];
 	startingStrongCell = strong;
@@ -339,31 +355,30 @@ void Simulation::createObject(string type, Map* map1)
 {
 	int pos;
 	bool attitude;
-	Cell* cellStrong;
-	Cell* cellMedium;
-	Cell* cellWeak;
+	Cell* cell;
 	Bonus* bonus;
+	Drug* drug;
 
 	if (type == "strong")
 	{
 		pos = Cell::setCellPosition(map1, type);
 		if (pos == -1) return;
-		cellStrong = new CellStrong(pos);
-		(map1->getMap() + pos)->setCellPointer(cellStrong);
+		cell = new CellStrong(pos);
+		(map1->getMap() + pos)->setCellPointer(cell);
 	}
 	else if (type == "medium")
 	{
 		pos = Cell::setCellPosition(map1, type);
 		if (pos == -1) return;
-		cellMedium = new CellMedium(pos);
-		(map1->getMap() + pos)->setCellPointer(cellMedium);
+		cell = new CellMedium(pos);
+		(map1->getMap() + pos)->setCellPointer(cell);
 	}
 	else if (type == "weak")
 	{
 		pos = Cell::setCellPosition(map1, type);
 		if (pos == -1) return;
-		cellWeak = new CellWeak(pos);
-		(map1->getMap() + pos)->setCellPointer(cellWeak);
+		cell = new CellWeak(pos);
+		(map1->getMap() + pos)->setCellPointer(cell);
 	}
 	else if (type == "bonus")
 	{
@@ -375,17 +390,17 @@ void Simulation::createObject(string type, Map* map1)
 	}
 	else if (type == "drugStrong")
 	{
-		Drug* drugStrong = new DrugStrong(100);
-		int power = drugStrong->getPower();
-		drugStrong->healing(map1, power);
-		delete drugStrong;
+		Drug* drug = new DrugStrong(100);
+		int power = drug->getPower();
+		drug->healing(map1, power);
+		delete drug;
 	}
 	else
 	{
-		Drug* drugMedium = new DrugMedium(50);
-		int power = drugMedium->getPower();
-		drugMedium->healing(map1, power);
-		delete drugMedium;
+		Drug* drug = new DrugMedium(50);
+		int power = drug->getPower();
+		drug->healing(map1, power);
+		delete drug;
 	}
 	return;
 }
@@ -405,15 +420,15 @@ void Simulation::printToFile(int endNumber, int currentIteration, char healingLe
 	int i;
 	if (endNumber == -1)
 	{
-		for (i = 0; i < 54; i++) fprintf(simOutput, "-");
-		fprintf(simOutput, "\n| ITERATION | HEALING | HEALED CELLS | DIVIDED CELLS |\n");
-		for (i = 0; i < 54; i++) fprintf(simOutput, "-");
+		for (i = 0; i < 97; i++) fprintf(simOutput, "-");
+		fprintf(simOutput, "\n| ITERATION | HEALING | STRONG CELLS | MEDIUM CELLS | WEAK CELLS | HEALED CELLS | DIVIDED CELLS |\n");
+		for (i = 0; i < 97; i++) fprintf(simOutput, "-");
 		return;
 	}
 	if (endNumber == 0)
 	{
-		fprintf(simOutput, "\n|%5d      |%8s |%7d       |%7d        |\n", currentIteration, healingLevel, cellsHealedIteration, cellsDividedIteration);
-		for (i = 0; i < 54; i++) fprintf(simOutput, "-");
+		fprintf(simOutput, "\n|%5d      |%8s |%7d       |%7d       |%6d      |%7d       |%7d        |\n", currentIteration, healingLevel, cancerStrongAmount, cancerMediumAmount, cancerWeakAmount, cellsHealedIteration, cellsDividedIteration);
+		for (i = 0; i < 97; i++) fprintf(simOutput, "-");
 		return;
 	}
 	if (endNumber == 2)
@@ -422,7 +437,7 @@ void Simulation::printToFile(int endNumber, int currentIteration, char healingLe
 	}
 	else if (endNumber == 3)
 	{
-		fprintf(simOutput, "\n\nIN THIS SIMULATION CANCER CELLS CAPTURED AT LEAST 90%% OF THE ORGANISM!");
+		fprintf(simOutput, "\n\nIN THIS SIMULATION CANCER CELLS TOOK OVER AT LEAST 90%% OF THE ORGANISM!");
 	}
 	else
 	{
@@ -442,15 +457,15 @@ void Simulation::printToScreen(Map map1)
 		if ((map1.getMap() + i-1)->getCellPointer() != NULL)
 		{
 			
-			Color(12);
+			color(12);
 			printf("C ");
-			Color(7);
+			color(7);
 		}
 		else if ((map1.getMap() + i-1)->getBonusPointer() != NULL)
 		{
-			Color(2);
+			color(2);
 			printf("B ");
-			Color(7);
+			color(7);
 		}
 		else
 		{
@@ -515,16 +530,13 @@ void Simulation::runSimulation()
 		else strcpy_s(healingLevel, "NO");
 
 		//STILL ALIVE
-		for (i = 0; i < map1.getSize(); i++)
+		if (strcmp(healingLevel, "NO") != 0)
 		{
-			if ((map1.getMap() + i)->getCellPointer() != NULL)
+			for (i = 0; i < map1.getSize(); i++)
 			{
-				if ((map1.getMap() + i)->getCellPointer()->stillAlive() == false)
+				if ((map1.getMap() + i)->getCellPointer() != NULL)
 				{
-					delete (map1.getMap() + i)->getCellPointer();
-					(map1.getMap() + i)->setCellPointer(NULL);
-					cellsHealedIteration++;
-					cellHealedAll++;
+					Cell::stillAlive(i, &map1);
 				}
 			}
 		}
@@ -539,7 +551,7 @@ void Simulation::runSimulation()
 		}
 
 		printToFile(0, currentIteration, healingLevel);
-		system("cls");
+		gotoxy(0, 0);
 		printToScreen(map1);
 		Sleep(500);
 		
@@ -549,6 +561,7 @@ void Simulation::runSimulation()
 	if (endCheck() == 2) printToFile(2, currentIteration, healingLevel);
 	else if (endCheck() == 3) printToFile(3, currentIteration, healingLevel);
 	else printToFile(4, currentIteration, healingLevel);
+	fclose(simOutput);
 
 	return;
 }
