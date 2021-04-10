@@ -1,11 +1,10 @@
-#include<iostream> 
-#include<stdio.h>
-#include<time.h>
-#include<cstdlib>
-#include<Windows.h>
-#include<cstring>
-#include"classList.h"
-
+#include <iostream>
+#include <stdio.h>
+#include <time.h>
+#include <cstdlib>
+#include <Windows.h>
+#include <cstring>
+#include "classList.h"
 
 #define _CRT_SECURE_NO_WARNINGS
 
@@ -18,16 +17,15 @@ int cellsDividedIteration = 0;
 int cellsHealedIteration = 0;
 int cellsDividedAll = 0;
 int cellHealedAll = 0;
-Bonus* bonusHolder = new Bonus(-1,1);
-FILE* simOutput;
-Simulation* Simulation::instance = 0;
+Bonus *bonusHolder = new Bonus(-1, 1);
+FILE *simOutput;
+Simulation *Simulation::instance = 0;
 
 void color(int color)
 {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 	return;
 }
-
 
 ////////////////// BONUS IMPLEMENTATION /////////////////////////
 
@@ -40,16 +38,16 @@ Bonus::Bonus(int position, bool setAttitude)
 
 Bonus::~Bonus() { bonusAmount--; }
 
-void Bonus::extraDivide(int position, Map* map1, std::string type)
+void Bonus::extraDivide(int position, Map *map1, std::string type)
 {
-	delete ((map1->getMap()+position)->getBonusPointer());
+	delete ((map1->getMap() + position)->getBonusPointer());
 	(map1->getMap() + position)->setBonusPointer(bonusHolder);
 	Simulation::createObject(type, map1);
 	(map1->getMap() + position)->setBonusPointer(NULL);
 	return;
 }
 
-void Bonus::instantCure(int position, Map* map1)
+void Bonus::instantCure(int position, Map *map1)
 {
 	delete ((map1->getMap() + position)->getBonusPointer());
 	(map1->getMap() + position)->setBonusPointer(NULL);
@@ -74,7 +72,8 @@ bool Bonus::drawAttitude()
 int Bonus::setBonusPosition(Map map1)
 {
 	srand(time(NULL));
-	if (map1.getSize() <= cancerCellAmount + bonusAmount) return -1;
+	if (map1.getSize() <= cancerCellAmount + bonusAmount)
+		return -1;
 	int pos;
 	do
 	{
@@ -85,7 +84,6 @@ int Bonus::setBonusPosition(Map map1)
 		}
 	} while (true);
 }
-
 
 ////////////////// CELL IMPLEMENTATION /////////////////////////
 
@@ -98,7 +96,6 @@ CellStrong::CellStrong(int position, int hp, int divide)
 	cancerStrongAmount++;
 }
 
-
 CellMedium::CellMedium(int position, int hp, int divide)
 {
 	this->hp = hp;
@@ -107,7 +104,6 @@ CellMedium::CellMedium(int position, int hp, int divide)
 	cancerCellAmount++;
 	cancerMediumAmount++;
 }
-
 
 CellWeak::CellWeak(int position, int hp, int divide)
 {
@@ -118,10 +114,10 @@ CellWeak::CellWeak(int position, int hp, int divide)
 	cancerWeakAmount++;
 }
 
-
-int Cell::setCellPosition(Map* map1, std::string type)
+int Cell::setCellPosition(Map *map1, std::string type)
 {
-	if (map1->getSize() <= cancerCellAmount + bonusAmount) return -1;
+	if (map1->getSize() <= cancerCellAmount + bonusAmount)
+		return -1;
 	srand(time(NULL));
 	int pos;
 	bool currentAttitude;
@@ -148,35 +144,39 @@ int Cell::setCellPosition(Map* map1, std::string type)
 				Bonus::instantCure(pos, map1);
 				return -1;
 			}
-
 		}
 	} while (true);
 }
 
-void Cell::setHp(int hp) { this->hp = hp; return; }
-
-void Cell::stillAlive(int pos, Map* map1)
+void Cell::setHp(int hp)
 {
-	if ((map1->getMap()+pos)->getCellPointer()->hp < 0)
+	this->hp = hp;
+	return;
+}
+
+void Cell::stillAlive(int pos, Map *map1)
+{
+	if ((map1->getMap() + pos)->getCellPointer()->hp < 0)
 	{
 		delete (map1->getMap() + pos)->getCellPointer();
 		(map1->getMap() + pos)->setCellPointer(NULL);
 		cellsHealedIteration++;
 		cellHealedAll++;
 	}
-
 }
 
 int Cell::getHp() { return this->hp; }
 
-void CellStrong::divideCheck(Map* map1)
+void CellStrong::divideCheck(Map *map1)
 {
-	if (cancerStrongAmount > 0.5 * (map1->getSize())) this->divideRatio = 15;
-	else this->divideRatio = 10;
+	if (cancerStrongAmount > 0.5 * (map1->getSize()))
+		this->divideRatio = 15;
+	else
+		this->divideRatio = 10;
 
 	int random = rand() % (this->divideRatio);
 
-	if(random == 1)
+	if (random == 1)
 	{
 		cellsDividedAll++;
 		cellsDividedIteration++;
@@ -185,15 +185,17 @@ void CellStrong::divideCheck(Map* map1)
 	return;
 }
 
-void CellMedium::divideCheck(Map* map1)
+void CellMedium::divideCheck(Map *map1)
 
 {
-	if (cancerMediumAmount > 0.5 * cancerCellAmount) this->divideRatio = 3;
-	else this->divideRatio = 5;
+	if (cancerMediumAmount > 0.5 * cancerCellAmount)
+		this->divideRatio = 3;
+	else
+		this->divideRatio = 5;
 
 	int random = rand() % (this->divideRatio);
 
-	if(random == 1)
+	if (random == 1)
 	{
 		cellsDividedAll++;
 		cellsDividedIteration++;
@@ -202,11 +204,11 @@ void CellMedium::divideCheck(Map* map1)
 	return;
 }
 
-void CellWeak::divideCheck(Map* map1)
+void CellWeak::divideCheck(Map *map1)
 {
 	int random = rand() % (this->divideRatio);
 
-	if(random == 1)
+	if (random == 1)
 	{
 		cellsDividedAll++;
 		cellsDividedIteration++;
@@ -233,7 +235,6 @@ CellWeak::~CellWeak()
 	cancerWeakAmount--;
 }
 
-
 ////////////////// FIELD IMPLEMENTATION /////////////////////////
 Field::Field()
 {
@@ -241,14 +242,21 @@ Field::Field()
 	cellPointer = NULL;
 }
 
-void Field::setCellPointer(Cell* newPointer) { this->cellPointer = newPointer; return; }
+void Field::setCellPointer(Cell *newPointer)
+{
+	this->cellPointer = newPointer;
+	return;
+}
 
-void Field::setBonusPointer(Bonus* newPointer) { this->bonusPointer = newPointer; return;  }
+void Field::setBonusPointer(Bonus *newPointer)
+{
+	this->bonusPointer = newPointer;
+	return;
+}
 
-Cell* Field::getCellPointer() { return this->cellPointer; }
+Cell *Field::getCellPointer() { return this->cellPointer; }
 
-Bonus* Field::getBonusPointer() { return this->bonusPointer; }
-
+Bonus *Field::getBonusPointer() { return this->bonusPointer; }
 
 ////////////////// DRUG IMPLEMENTATION /////////////////////////
 DrugStrong::DrugStrong(int power) { this->power = power; }
@@ -270,7 +278,7 @@ bool Drug::drawDrugsLevel()
 void DrugStrong::healing(Map *map1, int power)
 {
 	int i, size = map1->getSize(), newHp;
-	Cell* pointer;
+	Cell *pointer;
 	for (i = 0; i < size; i++)
 	{
 		pointer = (map1->getMap() + i)->getCellPointer();
@@ -287,7 +295,7 @@ void DrugStrong::healing(Map *map1, int power)
 void DrugMedium::healing(Map *map1, int power)
 {
 	int i, size = map1->getSize(), newHp;
-	Cell* pointer;
+	Cell *pointer;
 	for (i = 0; i < size; i += 2)
 	{
 		pointer = (map1->getMap() + i)->getCellPointer();
@@ -301,7 +309,6 @@ void DrugMedium::healing(Map *map1, int power)
 	return;
 }
 
-
 ///////////////// MAP IMPLEMENTATION ///////////////////////
 Map::Map(int size, int strong, int medium, int weak, int bonus, int space)
 {
@@ -312,11 +319,11 @@ Map::Map(int size, int strong, int medium, int weak, int bonus, int space)
 	startingWeakCell = weak;
 	spaceBetweenHealing = space;
 	startingBonus = bonus;
-} 
+}
 
 int Map::getSize() { return this->size; }
 
-Field* Map::getMap() { return this->map; }
+Field *Map::getMap() { return this->map; }
 
 int Map::getStartingCellStrong() { return this->startingStrongCell; }
 int Map::getStartingCellMedium() { return this->startingMediumCell; }
@@ -324,14 +331,13 @@ int Map::getStartingCellWeak() { return this->startingWeakCell; }
 int Map::getSpaceBetweenHealing() { return this->spaceBetweenHealing; }
 int Map::getStartingBonus() { return this->startingBonus; }
 
-
 ////////////////// SIMULATION IMPLEMENTATION //////////////////////
 
-Simulation* Simulation::getInstance(Map map1, int maxIter)
+Simulation *Simulation::getInstance(Map map1, int maxIter)
 {
 	if (instance == 0)
 	{
-		instance = new Simulation(map1,maxIter);
+		instance = new Simulation(map1, maxIter);
 	}
 	return instance;
 }
@@ -343,53 +349,57 @@ Simulation::Simulation(Map map1, int maxIteration)
 	currentIteration = 1;
 }
 
-void Simulation::createObject(std::string type, Map* map1)
+void Simulation::createObject(std::string type, Map *map1)
 {
 	int pos;
 	bool attitude;
-	Cell* cell;
-	Bonus* bonus;
-	Drug* drug;
+	Cell *cell;
+	Bonus *bonus;
+	Drug *drug;
 
 	if (type == "strong")
 	{
 		pos = Cell::setCellPosition(map1, type);
-		if (pos == -1) return;
+		if (pos == -1)
+			return;
 		cell = new CellStrong(pos);
 		(map1->getMap() + pos)->setCellPointer(cell);
 	}
 	else if (type == "medium")
 	{
 		pos = Cell::setCellPosition(map1, type);
-		if (pos == -1) return;
+		if (pos == -1)
+			return;
 		cell = new CellMedium(pos);
 		(map1->getMap() + pos)->setCellPointer(cell);
 	}
 	else if (type == "weak")
 	{
 		pos = Cell::setCellPosition(map1, type);
-		if (pos == -1) return;
+		if (pos == -1)
+			return;
 		cell = new CellWeak(pos);
 		(map1->getMap() + pos)->setCellPointer(cell);
 	}
 	else if (type == "bonus")
 	{
 		pos = Bonus::setBonusPosition(*map1);
-		if (pos == -1) return;
+		if (pos == -1)
+			return;
 		attitude = Bonus::drawAttitude();
 		bonus = new Bonus(pos, attitude);
 		(map1->getMap() + pos)->setBonusPointer(bonus);
 	}
 	else if (type == "drugStrong")
 	{
-		Drug* drug = new DrugStrong(100);
+		Drug *drug = new DrugStrong(100);
 		int power = drug->getPower();
 		drug->healing(map1, power);
 		delete drug;
 	}
 	else
 	{
-		Drug* drug = new DrugMedium(50);
+		Drug *drug = new DrugMedium(50);
 		int power = drug->getPower();
 		drug->healing(map1, power);
 		delete drug;
@@ -397,14 +407,17 @@ void Simulation::createObject(std::string type, Map* map1)
 	return;
 }
 
-
 int Simulation::endCheck()
 {
 	float taken = float(map1.getSize()) * 0.9;
-	if (taken < float(cancerCellAmount)) return 3;
-	if (cancerCellAmount == 0) return 2;
-	if (currentIteration <= maxIter) return 1;
-	else return 4;
+	if (taken < float(cancerCellAmount))
+		return 3;
+	if (cancerCellAmount == 0)
+		return 2;
+	if (currentIteration <= maxIter)
+		return 1;
+	else
+		return 4;
 }
 
 void Simulation::printToFile(int endNumber, int currentIteration, char healingLevel[9])
@@ -412,15 +425,18 @@ void Simulation::printToFile(int endNumber, int currentIteration, char healingLe
 	int i;
 	if (endNumber == -1)
 	{
-		for (i = 0; i < 97; i++) fprintf(simOutput, "-");
+		for (i = 0; i < 97; i++)
+			fprintf(simOutput, "-");
 		fprintf(simOutput, "\n| ITERATION | HEALING | STRONG CELLS | MEDIUM CELLS | WEAK CELLS | HEALED CELLS | DIVIDED CELLS |\n");
-		for (i = 0; i < 97; i++) fprintf(simOutput, "-");
+		for (i = 0; i < 97; i++)
+			fprintf(simOutput, "-");
 		return;
 	}
 	if (endNumber == 0)
 	{
 		fprintf(simOutput, "\n|%5d      |%8s |%7d       |%7d       |%6d      |%7d       |%7d        |\n", currentIteration, healingLevel, cancerStrongAmount, cancerMediumAmount, cancerWeakAmount, cellsHealedIteration, cellsDividedIteration);
-		for (i = 0; i < 97; i++) fprintf(simOutput, "-");
+		for (i = 0; i < 97; i++)
+			fprintf(simOutput, "-");
 		return;
 	}
 	if (endNumber == 2)
@@ -443,17 +459,17 @@ void Simulation::printToFile(int endNumber, int currentIteration, char healingLe
 
 void Simulation::printToScreen(Map map1)
 {
-	for (int i = 1; i < map1.getSize()+1; i++)
+	for (int i = 1; i < map1.getSize() + 1; i++)
 	{
 
-		if ((map1.getMap() + i-1)->getCellPointer() != NULL)
+		if ((map1.getMap() + i - 1)->getCellPointer() != NULL)
 		{
-			
+
 			color(12);
 			printf("C ");
 			color(7);
 		}
-		else if ((map1.getMap() + i-1)->getBonusPointer() != NULL)
+		else if ((map1.getMap() + i - 1)->getBonusPointer() != NULL)
 		{
 			color(2);
 			printf("B ");
@@ -463,7 +479,8 @@ void Simulation::printToScreen(Map map1)
 		{
 			printf("0 ");
 		}
-		if (i % 40 == 0 && i != 0 ) printf("\n");
+		if (i % 40 == 0 && i != 0)
+			printf("\n");
 	}
 	return;
 }
@@ -474,7 +491,7 @@ void Simulation::runSimulation()
 	char healingLevel[9];
 	simOutput = fopen("simulationProcess.txt", "w");
 	printToFile(-1, currentIteration, healingLevel);
-	
+
 	//CREATING STARTING OBJECTS
 	for (i = 0; i < map1.getStartingCellStrong(); i++)
 	{
@@ -491,16 +508,15 @@ void Simulation::runSimulation()
 		Simulation::createObject("weak", &map1);
 	}
 
-	for(i = 0 ; i < map1.getStartingBonus(); i++)
+	for (i = 0; i < map1.getStartingBonus(); i++)
 	{
 		Simulation::createObject("bonus", &map1);
 	}
 
-
 	//MAIN SIMULATION LOOP
 	do
 	{
-		
+
 		cellsHealedIteration = 0;
 		cellsDividedIteration = 0;
 
@@ -519,7 +535,8 @@ void Simulation::runSimulation()
 				strcpy_s(healingLevel, "MEDIUM");
 			}
 		}
-		else strcpy_s(healingLevel, "NO");
+		else
+			strcpy_s(healingLevel, "NO");
 
 		//STILL ALIVE
 		if (strcmp(healingLevel, "NO") != 0)
@@ -546,13 +563,16 @@ void Simulation::runSimulation()
 		gotoxy(0, 0);
 		printToScreen(map1);
 		Sleep(500);
-		
-		currentIteration++;
-	} while (endCheck()==1);
 
-	if (endCheck() == 2) printToFile(2, currentIteration, healingLevel);
-	else if (endCheck() == 3) printToFile(3, currentIteration, healingLevel);
-	else printToFile(4, currentIteration, healingLevel);
+		currentIteration++;
+	} while (endCheck() == 1);
+
+	if (endCheck() == 2)
+		printToFile(2, currentIteration, healingLevel);
+	else if (endCheck() == 3)
+		printToFile(3, currentIteration, healingLevel);
+	else
+		printToFile(4, currentIteration, healingLevel);
 	fclose(simOutput);
 
 	return;

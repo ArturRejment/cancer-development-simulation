@@ -1,7 +1,7 @@
-#include<iostream> 
-#include<conio.h>
-#include<Windows.h>
-#include"classList.h"
+#include <iostream>
+#include <conio.h>
+#include <Windows.h>
+#include "classList.cpp"
 using namespace std;
 
 void gotoxy(int x, int y)
@@ -13,7 +13,7 @@ void gotoxy(int x, int y)
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), c);
 }
 
-int menu(int* config)
+int menu(int *config)
 {
 	int menu = 0;
 	int x = 9;
@@ -24,40 +24,62 @@ int menu(int* config)
 	int bonus = 0;
 	int space = 1;
 
-	gotoxy(10, 9); cout << char(175);
+	gotoxy(10, 9);
+	cout << char(175);
 
 	while (true)
 	{
 		system("cls");
-		gotoxy(10, x); cout << char(175);
-		gotoxy(12, 9); cout << "Map size";
-		gotoxy(40, 9); cout << "<< " << mapSize << " >>";
-		gotoxy(12, 10); cout << "Amount of strong cells";
-		gotoxy(40, 10); cout << "<< " << strongCells << " >>";
-		gotoxy(12, 11); cout << "Amount of medium cells";
-		gotoxy(40, 11); cout << "<< " << mediumCells << " >>";
-		gotoxy(12, 12); cout << "Amount of weak cells";
-		gotoxy(40, 12); cout << "<< " << weakCells << " >>";
-		gotoxy(12, 13); cout << "Amount of bonus";
-		gotoxy(40, 13); cout << "<< " << bonus << " >>";
-		gotoxy(12, 14); cout << "Space between healing";
-		gotoxy(40, 14); cout << "<< " << space << " >>";
-		gotoxy(12, 15); cout << "CONFIRM";
+		gotoxy(10, x);
+		cout << char(175);
+		gotoxy(12, 9);
+		cout << "Map size";
+		gotoxy(40, 9);
+		cout << "<< " << mapSize << " >>";
+		gotoxy(12, 10);
+		cout << "Amount of strong cells";
+		gotoxy(40, 10);
+		cout << "<< " << strongCells << " >>";
+		gotoxy(12, 11);
+		cout << "Amount of medium cells";
+		gotoxy(40, 11);
+		cout << "<< " << mediumCells << " >>";
+		gotoxy(12, 12);
+		cout << "Amount of weak cells";
+		gotoxy(40, 12);
+		cout << "<< " << weakCells << " >>";
+		gotoxy(12, 13);
+		cout << "Amount of bonus";
+		gotoxy(40, 13);
+		cout << "<< " << bonus << " >>";
+		gotoxy(12, 14);
+		cout << "Space between healing";
+		gotoxy(40, 14);
+		cout << "<< " << space << " >>";
+		gotoxy(12, 15);
+		cout << "CONFIRM";
 
 		system("pause>nul");
 
 		if (GetAsyncKeyState(VK_DOWN) && x != 15)
 		{
-			gotoxy(10, x); cout << "  "; x++;
-			gotoxy(10, x); cout << char(175); menu++;
+			gotoxy(10, x);
+			cout << "  ";
+			x++;
+			gotoxy(10, x);
+			cout << char(175);
+			menu++;
 			continue;
-
 		}
 
 		if (GetAsyncKeyState(VK_UP) && x != 9)
 		{
-			gotoxy(10, x); cout << "  "; x--;
-			gotoxy(10, x); cout << char(175); menu--;
+			gotoxy(10, x);
+			cout << "  ";
+			x--;
+			gotoxy(10, x);
+			cout << char(175);
+			menu--;
 			continue;
 		}
 
