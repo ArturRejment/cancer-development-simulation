@@ -8,8 +8,8 @@ The simulation ends when cancer cells capture the whole organism, or when drugs 
 
 ## How to run?
 
-Simulation is implemented in c++ language. To compile the program with **g++** complier open the simulation directory in a terminal and type 'g++ main.cpp -o main'. Then open 'main.exe' file to run the program.
+Simulation is implemented in c++ language. To compile the program with **g++** complier open the simulation directory in a terminal and type `g++ main.cpp -o main`. Then open `main.exe` file to run the program.
 
 ## Output
 
-The simulation generates output file 'simulationProcess.txt' with the details of the simulation process.
+The simulation generates output file `simulationProcess.txt` with the details of the simulation process.
